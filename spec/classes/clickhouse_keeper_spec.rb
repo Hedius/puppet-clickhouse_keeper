@@ -8,6 +8,7 @@ describe 'clickhouse_keeper' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_package('clickhouse-keeper')}
     end
   end
 end
