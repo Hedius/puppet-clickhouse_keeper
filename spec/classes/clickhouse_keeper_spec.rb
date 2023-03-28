@@ -7,6 +7,6 @@ describe 'clickhouse_keeper' do
   let(:facts) { os_facts }
 
   it { is_expected.to compile.with_all_deps }
-  it { is_expected.to contain_package('clickhouse-keeper') }
+  it { is_expected.to contain_package('clickhouse-keeper').that_requires('Class[clickhouse_keeper::repo]') }
   it { is_expected.to contain_class('clickhouse_keeper::repo')}
 end

@@ -20,9 +20,14 @@ class clickhouse_keeper(
   }
 
   if $manage_package {
+    $_require = $manage_repo ? {
+      true => Class['clickhouse_keeper::repo'],
+      false => [],
+    }
     ensure_packages($packages, {
       ensure  => $package_ensure,
       install_options => $package_install_options,
+      require => $_require,
     })
   }
 
