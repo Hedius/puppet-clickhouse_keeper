@@ -9,7 +9,6 @@ describe 'clickhouse_keeper::repo' do
 
       it { is_expected.to compile.with_all_deps }
 
-
       case os_facts[:os][:family]
       when 'Debian'
         it {
@@ -20,8 +19,17 @@ describe 'clickhouse_keeper::repo' do
             repos: '',
           )
         }
+      when 'RedHat'
+        it {
+          is_expected.to contain_yumrepo('clickhouse').with(
+            name: 'clickhouse',
+            baseurl: 'https://packages.clickhouse.com/rpm/stable/',
+            enabled: 1,
+            gpgcheck: 0,
+            gpgkey: 'https://packages.clickhouse.com/rpm/stable/repodata/repomd.xml.key',
+          )
+        }
       end
-
     end
   end
 end

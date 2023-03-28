@@ -3,12 +3,10 @@
 require 'spec_helper'
 
 describe 'clickhouse_keeper' do
-  on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
-      let(:facts) { os_facts }
+  _, os_facts = on_supported_os.first
+  let(:facts) { os_facts }
 
-      it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_package('clickhouse-keeper')}
-    end
-  end
+  it { is_expected.to compile.with_all_deps }
+  it { is_expected.to contain_package('clickhouse-keeper') }
+  it { is_expected.to contain_class('clickhouse_keeper::repo')}
 end

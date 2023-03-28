@@ -8,7 +8,7 @@
 # @example
 #   include clickhouse_keeper
 class clickhouse_keeper(
-  Boolean $manage_repo = false,
+  Boolean $manage_repo = true,
   Boolean $manage_package = true,
   Array[String[1]] $packages = ['clickhouse-keeper'],
   String $package_ensure = 'present',
