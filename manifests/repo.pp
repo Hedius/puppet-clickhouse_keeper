@@ -4,7 +4,6 @@
 # @example
 #   include clickhouse::repo
 class clickhouse_keeper::repo {
-
   case $facts['os']['family'] {
     default: {
       fail("${facts['os']['family']} is not supported (yet).")
@@ -32,5 +31,4 @@ class clickhouse_keeper::repo {
       }
     }
   }
-
 }
