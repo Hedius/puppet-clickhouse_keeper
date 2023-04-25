@@ -9,7 +9,7 @@ class clickhouse_keeper::config (
     concat { $config_path:
       ensure => present,
       tag    => 'clickhouse_keeper::config',
-      warn   => true,
+      warn   => false,
       mode   => '0664',
       owner  => $clickhouse_keeper::owner,
       group  => $clickhouse_keeper::group,
