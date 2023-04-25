@@ -70,12 +70,10 @@ class clickhouse_keeper (
   }
 
   if $manage_config {
-    $raft_path = "${config_dir}/raft.xml"
+    $config_path = "${config_dir}/${config_file}"
 
     class { 'clickhouse_keeper::config':
-      config_dir  => $config_dir,
-      config_file => $config_file,
-      raft_path   => $raft_path,
+      config_path => $config_path,
       cluster     => $cluster,
     }
 
@@ -84,7 +82,7 @@ class clickhouse_keeper (
         id      => $id,
         address => $address,
         port    => $raft_port,
-        target  => $raft_path,
+        target  => $config_path,
         cluster => $cluster,
       }
     }

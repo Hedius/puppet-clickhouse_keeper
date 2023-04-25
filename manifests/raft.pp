@@ -21,6 +21,6 @@ define clickhouse_keeper::raft (
         'port'    => $port
     }),
     order   => 50,
-    tag     => "clickhouse_keeper::raft-${cluster}",
+    tag     => "clickhouse_keeper::config-${cluster}",
   }
 }

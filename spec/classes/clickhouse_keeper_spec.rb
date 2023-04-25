@@ -15,7 +15,7 @@ describe 'clickhouse_keeper' do
     let(:params) { { id: 2 } }
 
     it {
-      is_expected.to contain_file('/etc/clickhouse-keeper/keeper_config.xml').with_content(%r{<server_id>2</server_id>})
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<server_id>2</server_id>})
     }
   end
 
@@ -23,7 +23,7 @@ describe 'clickhouse_keeper' do
     let(:params) { { log_level: 'trace' } }
 
     it {
-      is_expected.to contain_file('/etc/clickhouse-keeper/keeper_config.xml').with_content(%r{<level>trace</level>})
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<level>trace</level>})
     }
   end
 
@@ -31,10 +31,9 @@ describe 'clickhouse_keeper' do
     let(:params) { { max_connections: 1024 } }
 
     it {
-      is_expected.to contain_file('/etc/clickhouse-keeper/keeper_config.xml').with_content(%r{<max_connections>1024</max_connections>})
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<max_connections>1024</max_connections>})
     }
   end
-
 
   context 'manage service' do
     let(:params) {
@@ -43,6 +42,16 @@ describe 'clickhouse_keeper' do
 
     it {
       is_expected.to contain_service('clickhouse-keeper').with({ensure: 'running'})
+    }
+  end
+
+  context 'do not manage service' do
+    let(:params) {
+      { manage_service: false }
+    }
+
+    it {
+      is_expected.not_to contain_service('clickhouse-keeper').with({ensure: 'running'})
     }
   end
 end
