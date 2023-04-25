@@ -1,0 +1,5 @@
+        <server>
+            <id><%= $id %></id>
+            <hostname><%= $address %></hostname>
+            <port><%= $port %></port>
+        </server>

@@ -31,6 +31,7 @@ class clickhouse_keeper (
   Boolean $manage_config = true,
   Boolean $manage_repo = true,
   Boolean $manage_package = true,
+  Boolean $export_raft = true,
   Array[String[1]] $packages = ['clickhouse-keeper'],
   String $package_ensure = 'present',
   Array[String] $package_install_options = [],
@@ -44,6 +45,9 @@ class clickhouse_keeper (
   String $log_size = '1000M',
   Integer $log_count = 10,
   Integer $max_connections = 4096,
+  String $address = $facts['networking']['ip'],
+  String $cluster = 'main',
+  Integer $raft_port = 9234,
 ) {
   if $manage_repo {
     include clickhouse_keeper::repo
@@ -51,17 +55,34 @@ class clickhouse_keeper (
 
   if $manage_package {
     $_require = $manage_repo ? {
-      true => Class['clickhouse_keeper::repo'],
+      true  => Class['clickhouse_keeper::repo'],
       false => [],
     }
     ensure_packages($packages, {
-        ensure  => $package_ensure,
+        ensure          => $package_ensure,
         install_options => $package_install_options,
-        require => $_require,
+        require         => $_require,
     })
   }
 
   if $manage_config {
-    include clickhouse_keeper::config
+    $raft_path = "${config_dir}/raft.xml"
+
+    class { 'clickhouse_keeper::config':
+      config_dir  => $config_dir,
+      config_file => $config_file,
+      raft_path   => $raft_path,
+      cluster     => $cluster,
+    }
+
+    if $export_raft {
+      @@clickhouse_keeper::raft { "clickhouse_keeper-${address}":
+        id      => $id,
+        address => $address,
+        port    => $raft_port,
+        target  => $raft_path,
+        cluster => $cluster,
+      }
+    }
   }
 }

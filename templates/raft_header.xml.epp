@@ -1,0 +1,3 @@
+<clickhouse>
+  <keeper_server>
+    <raft_configuration>

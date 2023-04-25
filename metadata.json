@@ -7,15 +7,19 @@
   "source": "",
   "dependencies": [
     {
-      "name": "puppetlabs-stdlib",
+      "name": "puppetlabs/stdlib",
       "version_requirement": ">= 4.20.0 < 9.0.0"
     },
     {
-      "name": "puppetlabs-apt",
+      "name": "puppetlabs/apt",
       "version_requirement": ">= 4.4.0 < 9.0.0"
     },
     {
-      "name": "puppetlabs-yumrepo_core",
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 2.1.0 < 9.0.0"
+    },
+    {
+      "name": "puppetlabs/yumrepo_core",
       "version_requirement": ">= 1.0.0"
     }
   ],

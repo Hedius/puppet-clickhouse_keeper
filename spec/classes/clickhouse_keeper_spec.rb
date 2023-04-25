@@ -34,5 +34,4 @@ describe 'clickhouse_keeper' do
       is_expected.to contain_file('/etc/clickhouse-keeper/keeper_config.xml').with_content(%r{<max_connections>1024</max_connections>})
     }
   end
-
 end

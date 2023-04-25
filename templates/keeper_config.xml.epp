@@ -8,7 +8,6 @@
         <!-- <console>1</console> --> <!-- Default behavior is autodetection (log to console if not daemon mode and is tty) -->
     </logger>
     <max_connections><%= $max_connections %></max_connections>
-
     <keeper_server>
             <tcp_port>9181</tcp_port>
             <!-- Must be unique among all keeper serves -->
@@ -29,7 +28,7 @@
             <hostname_checks_enabled>true</hostname_checks_enabled>
             <raft_configuration>
                 <server>
-                    <id><%= $server_id %></id>
+                    <id>1</id>
 
                     <!-- Internal port and hostname -->
                     <hostname>localhost</hostname>
@@ -40,8 +39,6 @@
 
             </raft_configuration>
     </keeper_server>
-
-
     <openSSL>
       <server>
             <!-- Used for secure tcp port -->
@@ -61,5 +58,4 @@
             <preferServerCiphers>true</preferServerCiphers>
         </server>
     </openSSL>
-
 </clickhouse>
