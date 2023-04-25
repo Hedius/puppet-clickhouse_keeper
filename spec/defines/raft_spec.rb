@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe 'clickhouse_keeper::raft' do
   let(:title) { 'localhost' }
-  let(:facts) { os_facts }
   let(:params) do
     {
       id: 1,
@@ -15,7 +14,10 @@ describe 'clickhouse_keeper::raft' do
     }
   end
 
-  _, os_facts = on_supported_os.first
+  context 'with default parameters' do
+    _, os_facts = on_supported_os.first
+    let(:facts) { os_facts }
 
-  it { is_expected.to compile.with_all_deps }
+    it { is_expected.to compile.with_all_deps }
+  end
 end

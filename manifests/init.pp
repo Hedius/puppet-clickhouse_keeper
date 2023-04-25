@@ -27,7 +27,7 @@
 # @example
 #   include clickhouse_keeper
 class clickhouse_keeper (
-  Integer $id = 1,
+  Integer $id = fqdn_rand(255, $facts['networking']['ip']),
   Boolean $manage_config = true,
   Boolean $manage_repo = true,
   Boolean $manage_package = true,
