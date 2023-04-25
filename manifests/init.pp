@@ -6,6 +6,7 @@
 # @param manage_repo
 #    Whether APT/RPM repository should be managed by Puppet
 # @param manage_package
+# @param manage_service
 # @param packages
 #    OS packages to be installed
 # @param package_ensure
@@ -31,6 +32,7 @@ class clickhouse_keeper (
   Boolean $manage_config = true,
   Boolean $manage_repo = true,
   Boolean $manage_package = true,
+  Boolean $manage_service = true,
   Boolean $export_raft = true,
   Array[String[1]] $packages = ['clickhouse-keeper'],
   String $package_ensure = 'present',
@@ -47,6 +49,8 @@ class clickhouse_keeper (
   Integer $max_connections = 4096,
   String $address = $facts['networking']['ip'],
   String $cluster = 'main',
+  String $service_name = 'clickhouse-keeper',
+  String $service_ensure = 'running',
   Integer $raft_port = 9234,
 ) {
   if $manage_repo {
@@ -76,13 +80,19 @@ class clickhouse_keeper (
     }
 
     if $export_raft {
-      @@clickhouse_keeper::raft { "clickhouse_keeper-${address}":
+      clickhouse_keeper::raft { "clickhouse_keeper-${address}":
         id      => $id,
         address => $address,
         port    => $raft_port,
         target  => $raft_path,
         cluster => $cluster,
       }
+    }
+  }
+
+  if $manage_service {
+    service { $service_name:
+      ensure => $service_ensure
     }
   }
 }

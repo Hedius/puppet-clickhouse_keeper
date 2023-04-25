@@ -34,4 +34,15 @@ describe 'clickhouse_keeper' do
       is_expected.to contain_file('/etc/clickhouse-keeper/keeper_config.xml').with_content(%r{<max_connections>1024</max_connections>})
     }
   end
+
+
+  context 'manage service' do
+    let(:params) {
+      { manage_service: true }
+    }
+
+    it {
+      is_expected.to contain_service('clickhouse-keeper').with({ensure: 'running'})
+    }
+  end
 end
