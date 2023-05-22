@@ -13,7 +13,11 @@ class clickhouse_keeper::config (
       mode   => '0664',
       owner  => $clickhouse_keeper::owner,
       group  => $clickhouse_keeper::group,
-      notify => Service['clickhouse-keeper'],
+    }
+    if $clickhouse_keeper::manage_service {
+      Concat <<| title == $config_path |>> {
+        notify => Service['clickhouse-keeper'],
+      }
     }
   }
 

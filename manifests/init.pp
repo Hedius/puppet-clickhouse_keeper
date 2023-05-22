@@ -80,7 +80,12 @@ class clickhouse_keeper (
       mode    => '0644',
       owner   => $owner,
       group   => $group,
-      require => Package['clickhouse-keeper'],
+    }
+
+    if $manage_package {
+      File <<| title == $config_dir |>> {
+        require => Package['clickhouse-keeper'],
+      }
     }
 
     class { 'clickhouse_keeper::config':

@@ -11,6 +11,20 @@ describe 'clickhouse_keeper' do
   it { is_expected.to contain_class('clickhouse_keeper::repo') }
   it { is_expected.to contain_class('clickhouse_keeper::config') }
 
+  context 'with default values' do
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<server_id>\d+</server_id>})
+    }
+
+    it {
+      is_expected.to contain_file('/etc/clickhouse-keeper').with(
+        ensure: 'directory',
+        owner: 'clickhouse',
+        group: 'clickhouse',
+      )
+    }
+  end
+
   context 'set server_id' do
     let(:params) { { id: 2 } }
 
@@ -37,11 +51,19 @@ describe 'clickhouse_keeper' do
 
   context 'manage service' do
     let(:params) do
-      { manage_service: true }
+      {
+        manage_service: true,
+        service_enable: true,
+      }
     end
 
     it {
-      is_expected.to contain_service('clickhouse-keeper').with({ ensure: 'running' })
+      is_expected.to contain_service('clickhouse-keeper').with(
+        {
+          ensure: 'running',
+          enable: true,
+        }
+      )
     }
   end
 
@@ -51,7 +73,7 @@ describe 'clickhouse_keeper' do
     end
 
     it {
-      is_expected.not_to contain_service('clickhouse-keeper').with({ ensure: 'running' })
+      is_expected.not_to contain_service('clickhouse-keeper')
     }
   end
 end
