@@ -62,7 +62,7 @@ describe 'clickhouse_keeper' do
         {
           ensure: 'running',
           enable: true,
-        }
+        },
       )
     }
   end
