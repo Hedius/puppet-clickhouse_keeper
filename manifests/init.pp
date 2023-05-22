@@ -59,7 +59,7 @@ class clickhouse_keeper (
 
   if $manage_package {
     $_require = $manage_repo ? {
-      true  => Class['clickhouse_keeper::repo'],
+      true  => [Class['clickhouse_keeper::repo'], Class['Apt::Update']]
       false => [],
     }
     ensure_packages($packages, {
@@ -72,9 +72,17 @@ class clickhouse_keeper (
   if $manage_config {
     $config_path = "${config_dir}/${config_file}"
 
+    file { $config_dir:
+      ensure => directory,
+      mode   => '0664',
+      owner  => $owner,
+      group  => $group,
+    }
+
     class { 'clickhouse_keeper::config':
       config_path => $config_path,
       cluster     => $cluster,
+      require     => File[$config_dir]
     }
 
     if $export_raft {
