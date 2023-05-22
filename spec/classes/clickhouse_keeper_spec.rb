@@ -36,22 +36,22 @@ describe 'clickhouse_keeper' do
   end
 
   context 'manage service' do
-    let(:params) {
+    let(:params) do
       { manage_service: true }
-    }
+    end
 
     it {
-      is_expected.to contain_service('clickhouse-keeper').with({ensure: 'running'})
+      is_expected.to contain_service('clickhouse-keeper').with({ ensure: 'running' })
     }
   end
 
   context 'do not manage service' do
-    let(:params) {
+    let(:params) do
       { manage_service: false }
-    }
+    end
 
     it {
-      is_expected.not_to contain_service('clickhouse-keeper').with({ensure: 'running'})
+      is_expected.not_to contain_service('clickhouse-keeper').with({ ensure: 'running' })
     }
   end
 end
