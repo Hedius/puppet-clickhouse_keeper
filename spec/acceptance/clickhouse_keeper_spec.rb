@@ -19,8 +19,18 @@ describe 'clickhouse_keeper' do
     describe file('/etc/clickhouse-keeper') do
       it { is_expected.to be_directory }
       it { is_expected.to be_readable.by('owner') }
-      it { is_expected.not_to be_readable.by('group') }
-      it { is_expected.not_to be_readable.by('others') }
+      it { is_expected.to be_readable.by('group') }
+      it { is_expected.to be_readable.by('others') }
+    end
+
+    describe package('clickhouse-keeper') do
+      it { is_expected.to be_installed }
+    end
+
+    describe service('clickhouse-keeper') do
+      it { is_expected.to be_enabled }
+      # might be in state activating
+      # it { is_expected.to be_running }
     end
   end
 end

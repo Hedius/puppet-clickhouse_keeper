@@ -24,6 +24,8 @@
 # @param log_size
 # @param log_count
 # @param max_connections
+# @param service_enable
+# @param service_ensure
 #
 # @example
 #   include clickhouse_keeper
@@ -51,6 +53,7 @@ class clickhouse_keeper (
   String $cluster = 'main',
   String $service_name = 'clickhouse-keeper',
   String $service_ensure = 'running',
+  Boolean $service_enable = true,
   Integer $raft_port = 9234,
 ) {
   if $manage_repo {
@@ -73,10 +76,11 @@ class clickhouse_keeper (
     $config_path = "${config_dir}/${config_file}"
 
     file { $config_dir:
-      ensure => directory,
-      mode   => '0664',
-      owner  => $owner,
-      group  => $group,
+      ensure  => directory,
+      mode    => '0644',
+      owner   => $owner,
+      group   => $group,
+      require => Package['clickhouse-keeper'],
     }
 
     class { 'clickhouse_keeper::config':
@@ -98,7 +102,8 @@ class clickhouse_keeper (
 
   if $manage_service {
     service { $service_name:
-      ensure => $service_ensure
+      enable => $service_enable,
+      ensure => $service_ensure,
     }
   }
 }

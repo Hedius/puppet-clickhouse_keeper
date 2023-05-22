@@ -13,6 +13,7 @@ class clickhouse_keeper::config (
       mode   => '0664',
       owner  => $clickhouse_keeper::owner,
       group  => $clickhouse_keeper::group,
+      notify => Service['clickhouse-keeper'],
     }
   }
 
