@@ -21,9 +21,10 @@ describe 'clickhouse_keeper' do
       it { is_expected.to be_readable.by('others') }
     end
 
-    describe package('clickhouse-keeper') do
-      it { is_expected.to be_installed }
-    end
+    # we need a static raft config for this
+    # describe package('clickhouse-keeper') do
+    #   it { is_expected.to be_installed }
+    # end
 
     # describe service('clickhouse-keeper') do
     #  #it { is_expected.to be_enabled }
