@@ -33,6 +33,7 @@ class clickhouse_keeper (
   Integer $id = fqdn_rand(255, $facts['networking']['ip']),
   Boolean $manage_config = true,
   Boolean $manage_repo = true,
+  Boolean $manage_user = true,
   Boolean $manage_package = true,
   Boolean $manage_service = true,
   Boolean $export_raft = true,
@@ -60,16 +61,16 @@ class clickhouse_keeper (
     include clickhouse_keeper::repo
   }
 
-  if $manage_package {
-    $_require = $manage_repo ? {
-      true  => [Class['clickhouse_keeper::repo']],
-      false => [],
-    }
-    ensure_packages($packages, {
-        ensure          => $package_ensure,
-        install_options => $package_install_options,
-        require         => $_require,
-    })
+  if $manage_user {
+    ensure_resource('group', $group)
+
+    ensure_resource('user', $owner,
+      {
+        'shell' => '/bin/false',
+        'home'  => '/dev/null',
+        'gid' => $group,
+      }
+    )
   }
 
   if $manage_config {
@@ -85,6 +86,12 @@ class clickhouse_keeper (
     if $manage_package {
       File <<| title == $config_dir |>> {
         require => Package['clickhouse-keeper'],
+      }
+    }
+
+    if $manage_user {
+      File <<| title == $config_dir |>> {
+        require => User[$owner],
       }
     }
 
@@ -105,10 +112,34 @@ class clickhouse_keeper (
     }
   }
 
+  if $manage_package {
+    $_require = $manage_repo ? {
+      true  => [Class['clickhouse_keeper::repo']],
+      false => [],
+    }
+    ensure_packages($packages, {
+        ensure          => $package_ensure,
+        install_options => $package_install_options,
+        require         => $_require,
+    })
+  }
+
   if $manage_service {
     service { $service_name:
       enable => $service_enable,
       ensure => $service_ensure,
+    }
+
+    if $manage_package {
+      Service <<| title == $service_name |>> {
+        require => Package['clickhouse-keeper'],
+      }
+    }
+
+    if $manage_config {
+      Service <<| title == $service_name |>> {
+        require => File["${config_dir}/${config_file}"],
+      }
     }
   }
 }

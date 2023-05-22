@@ -23,6 +23,14 @@ describe 'clickhouse_keeper' do
         group: 'clickhouse',
       )
     }
+
+    it {
+      is_expected.to contain_user('clickhouse').with(
+        home: '/dev/null',
+        shell: '/bin/false',
+        gid: 'clickhouse',
+      )
+    }
   end
 
   context 'set server_id' do
