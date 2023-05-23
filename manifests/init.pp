@@ -26,6 +26,8 @@
 # @param max_connections
 # @param service_enable
 # @param service_ensure
+# @param tcp_port
+#    Port for client connections
 #
 # @example
 #   include clickhouse_keeper
@@ -86,7 +88,7 @@ class clickhouse_keeper (
 
     if $manage_package {
       File <<| title == $config_dir |>> {
-        require => Package['clickhouse-keeper'],
+        require => Package[$packages],
       }
     }
 
@@ -133,7 +135,7 @@ class clickhouse_keeper (
 
     if $manage_package {
       Service <<| title == $service_name |>> {
-        require => Package['clickhouse-keeper'],
+        require => Package[$packages],
       }
     }
 
