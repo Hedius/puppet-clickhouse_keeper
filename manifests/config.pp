@@ -40,7 +40,11 @@ class clickhouse_keeper::config (
 
   concat::fragment { 'keeper_footer':
     target  => $config_path,
-    content => epp("${module_name}/keeper_footer.xml.epp"),
+    content => epp("${module_name}/keeper_footer.xml.epp", {
+        'certificate'     => $clickhouse_keeper::certificate,
+        'private_key'     => $clickhouse_keeper::private_key,
+        'dhparams'        => $clickhouse_keeper::dhparams,
+      }),
     order   => 99,
   }
 }

@@ -96,4 +96,12 @@ describe 'clickhouse_keeper' do
       is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<tcp_port>9100</tcp_port>})
     }
   end
+
+  context 'set ssl certificate' do
+    let(:params) { { certificate: '/etc/ssl/server.crt' } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_footer').with_content(%r{<certificateFile>/etc/ssl/server.crt</certificateFile>})
+    }
+  end
 end

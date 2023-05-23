@@ -39,6 +39,7 @@ class clickhouse_keeper (
   Boolean $manage_package = true,
   Boolean $manage_service = true,
   Boolean $export_raft = true,
+  Boolean $generate_certs = true,
   Clickhouse_Keeper::Raft_config $raft_config = {},
   Array[String[1]] $packages = ['clickhouse-keeper'],
   String $package_ensure = 'present',
@@ -60,6 +61,9 @@ class clickhouse_keeper (
   Boolean $service_enable = true,
   Integer $raft_port = 9234,
   Integer $tcp_port = 9181,
+  Stdlib::AbsolutePath $certificate = '/etc/clickhouse-keeper/server.crt',
+  Stdlib::AbsolutePath $private_key = '/etc/clickhouse-keeper/server.key',
+  Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
 ) {
 
   include clickhouse_keeper::repo
@@ -136,6 +140,15 @@ class clickhouse_keeper (
         install_options => $package_install_options,
         require         => Class['Clickhouse_keeper::Repo'],
     })
+  }
+
+  if $generate_certs {
+    exec { 'generate_dhparams':
+      command => "openssl dhparam -out ${dhparams} 4096",
+      path    => [ '/bin', '/usr/bin' ],
+      onlyif  => 'which openssl',
+      creates => $dhparams,
+    }
   }
 
   if $manage_service {
