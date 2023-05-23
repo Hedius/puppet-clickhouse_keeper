@@ -7,6 +7,10 @@ describe 'clickhouse_keeper::repo' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
+      let :pre_condition do
+        'include clickhouse_keeper'
+      end
+
       it { is_expected.to compile.with_all_deps }
 
       case os_facts[:os][:family]

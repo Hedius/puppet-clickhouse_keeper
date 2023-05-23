@@ -21,8 +21,8 @@ describe 'clickhouse_keeper' do
         }
       EOS
 
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: false)
+      apply_manifest(pp, catch_failures: false)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe file('/etc/clickhouse-keeper') do

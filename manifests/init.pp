@@ -61,9 +61,8 @@ class clickhouse_keeper (
   Integer $raft_port = 9234,
   Integer $tcp_port = 9181,
 ) {
-  if $manage_repo {
-    include clickhouse_keeper::repo
-  }
+
+  include clickhouse_keeper::repo
 
   if $manage_user {
     ensure_resource('group', $group)
@@ -85,6 +84,7 @@ class clickhouse_keeper (
       mode   => '0644',
       owner  => $owner,
       group  => $group,
+      require => Class['Clickhouse_keeper::Repo']
     }
 
     if $manage_package {
@@ -131,14 +131,10 @@ class clickhouse_keeper (
   }
 
   if $manage_package {
-    $_require = $manage_repo ? {
-      true  => [Class['clickhouse_keeper::repo']],
-      false => [],
-    }
     ensure_packages($packages, {
         ensure          => $package_ensure,
         install_options => $package_install_options,
-        require         => $_require,
+        require         => Class['Clickhouse_keeper::Repo'],
     })
   }
 
@@ -146,7 +142,7 @@ class clickhouse_keeper (
     service { $service_name:
       ensure  => $service_ensure,
       enable  => $service_enable,
-      require => Class['clickhouse_keeper::config'],
+      require => Class['Clickhouse_keeper::Config'],
     }
 
     if $manage_package {
