@@ -7,7 +7,18 @@ describe 'clickhouse_keeper' do
   context 'basic setup' do
     it 'installs clickhouse_keeper' do
       pp = <<~EOS
-        include clickhouse_keeper
+        class { 'clickhouse_keeper':
+          export_raft => false,
+          id => 1,
+          raft_config => {
+            'localhost' => {
+              'id' => 1,
+              'address' => '127.0.0.1',
+              'port' => 9234,
+              'cluster' => 'main',
+            },
+          },
+        }
       EOS
 
       apply_manifest(pp, catch_failures: true)

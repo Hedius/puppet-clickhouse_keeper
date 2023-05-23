@@ -10,7 +10,8 @@ describe 'clickhouse_keeper::raft' do
       address: 'localhost',
       port: 9123,
       cluster: 'main',
-      target: '/etc/clickhouse-keeper/config.xml'
+      target: '/etc/clickhouse-keeper/config.xml',
+      export_raft: false,
     }
   end
 

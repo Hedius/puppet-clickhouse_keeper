@@ -12,15 +12,30 @@ define clickhouse_keeper::raft (
   Integer $port,
   String  $target,
   String  $cluster,
+  Boolean $export_raft,
 ) {
-  @@concat::fragment { $title:
-    target  => $target,
-    content => epp("${module_name}/raft.xml.epp", {
-        'id'      => $id,
-        'address' => $address,
-        'port'    => $port
-    }),
-    order   => 50,
-    tag     => "clickhouse_keeper::config-${cluster}",
+
+  if $export_raft {
+    @@concat::fragment { $title:
+      target  => $target,
+      content => epp("${module_name}/raft.xml.epp", {
+          'id'      => $id,
+          'address' => $address,
+          'port'    => $port
+      }),
+      order   => 50,
+      tag     => "clickhouse_keeper::config-${cluster}",
+    }
+  } else {
+    concat::fragment { $title:
+      target  => $target,
+      content => epp("${module_name}/raft.xml.epp", {
+          'id'      => $id,
+          'address' => $address,
+          'port'    => $port
+      }),
+      order   => 50,
+      tag     => "clickhouse_keeper::config-${cluster}",
+    }
   }
 }

@@ -39,6 +39,7 @@ class clickhouse_keeper (
   Boolean $manage_package = true,
   Boolean $manage_service = true,
   Boolean $export_raft = true,
+  Clickhouse_Keeper::Raft_config $raft_config = {},
   Array[String[1]] $packages = ['clickhouse-keeper'],
   String $package_ensure = 'present',
   Array[String] $package_install_options = [],
@@ -80,10 +81,10 @@ class clickhouse_keeper (
     $config_path = "${config_dir}/${config_file}"
 
     file { $config_dir:
-      ensure  => directory,
-      mode    => '0644',
-      owner   => $owner,
-      group   => $group,
+      ensure => directory,
+      mode   => '0644',
+      owner  => $owner,
+      group  => $group,
     }
 
     if $manage_package {
@@ -106,11 +107,25 @@ class clickhouse_keeper (
 
     if $export_raft {
       clickhouse_keeper::raft { "clickhouse_keeper-${address}":
-        id      => $id,
-        address => $address,
-        port    => $raft_port,
-        target  => $config_path,
-        cluster => $cluster,
+        id          => $id,
+        address     => $address,
+        port        => $raft_port,
+        target      => $config_path,
+        cluster     => $cluster,
+        export_raft => true,
+      }
+    }
+
+    if !empty($raft_config) {
+      $raft_config.each |$server, $props| {
+        clickhouse_keeper::raft { "clickhouse_keeper-${server}":
+          id          => $props['id'],
+          address     => $props['address'],
+          port        => $props['port'],
+          target      => $config_path,
+          cluster     => $props['cluster'],
+          export_raft => false,
+        }
       }
     }
   }
@@ -129,8 +144,9 @@ class clickhouse_keeper (
 
   if $manage_service {
     service { $service_name:
-      enable => $service_enable,
-      ensure => $service_ensure,
+      ensure  => $service_ensure,
+      enable  => $service_enable,
+      require => Class['clickhouse_keeper::config'],
     }
 
     if $manage_package {
