@@ -31,6 +31,7 @@ class clickhouse_keeper::config (
         'log_size'        => $clickhouse_keeper::log_size,
         'log_count'       => $clickhouse_keeper::log_count,
         'max_connections' => $clickhouse_keeper::max_connections,
+        'tcp_port'        => $clickhouse_keeper::tcp_port,
     }),
     order   => 1,
   }

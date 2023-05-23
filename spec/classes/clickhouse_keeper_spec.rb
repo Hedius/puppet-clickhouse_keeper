@@ -31,6 +31,10 @@ describe 'clickhouse_keeper' do
         gid: 'clickhouse',
       )
     }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<tcp_port>9181</tcp_port>})
+    }
   end
 
   context 'set server_id' do
@@ -82,6 +86,14 @@ describe 'clickhouse_keeper' do
 
     it {
       is_expected.not_to contain_service('clickhouse-keeper')
+    }
+  end
+
+  context 'set tcp port' do
+    let(:params) { { tcp_port: 9100 } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<tcp_port>9100</tcp_port>})
     }
   end
 end

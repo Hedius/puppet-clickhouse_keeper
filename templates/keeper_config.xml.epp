@@ -9,7 +9,7 @@
     </logger>
     <max_connections><%= $max_connections %></max_connections>
     <keeper_server>
-        <tcp_port>9181</tcp_port>
+        <tcp_port><%= $tcp_port %></tcp_port>
         <!-- Must be unique among all keeper serves -->
         <server_id><%= $server_id %></server_id>
 

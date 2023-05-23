@@ -56,6 +56,7 @@ class clickhouse_keeper (
   String $service_ensure = 'running',
   Boolean $service_enable = true,
   Integer $raft_port = 9234,
+  Integer $tcp_port = 9181,
 ) {
   if $manage_repo {
     include clickhouse_keeper::repo
