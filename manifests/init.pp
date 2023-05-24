@@ -39,7 +39,7 @@ class clickhouse_keeper (
   Boolean $manage_package = true,
   Boolean $manage_service = true,
   Boolean $export_raft = true,
-  Boolean $generate_certs = true,
+  Boolean $generate_certs = false,
   Clickhouse_Keeper::Raft_config $raft_config = {},
   Array[String[1]] $packages = ['clickhouse-keeper'],
   String $package_ensure = 'present',
@@ -143,11 +143,13 @@ class clickhouse_keeper (
   }
 
   if $generate_certs {
+    # This is going to take a long time
     exec { 'generate_dhparams':
       command => "openssl dhparam -out ${dhparams} 4096",
       path    => [ '/bin', '/usr/bin' ],
       onlyif  => 'which openssl',
       creates => $dhparams,
+      timeout => 0, # disable timeout
     }
   }
 
