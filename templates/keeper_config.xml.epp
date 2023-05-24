@@ -11,7 +11,7 @@
     <keeper_server>
         <tcp_port><%= $tcp_port %></tcp_port>
         <% if $tcp_port_secure { -%>
-        <tcp_port_secure><%= $tcp_port_secure %></tcp_port_secure>
+            <tcp_port_secure><%= $tcp_port_secure %></tcp_port_secure>
         <% }-%>
         <!-- Must be unique among all keeper serves -->
         <server_id><%= $server_id %></server_id>

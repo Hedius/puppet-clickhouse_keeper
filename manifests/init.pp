@@ -79,7 +79,7 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $snapshot_storage_path = '/var/lib/clickhouse/coordination/snapshots',
   Integer $operation_timeout = 10000,
   Integer $min_session_timeout = 10000,
-  Integer $session_timeout = 10000,
+  Integer $session_timeout = 100000,
 ) {
   include clickhouse_keeper::repo
 
