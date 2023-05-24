@@ -107,13 +107,13 @@ class clickhouse_keeper (
     }
 
     if $manage_package {
-      File <<| title == $config_dir |>> {
+      File <| title == $config_dir |> {
         require => Package[$packages],
       }
     }
 
     if $manage_user {
-      File <<| title == $config_dir |>> {
+      File <| title == $config_dir |> {
         require => User[$owner],
       }
     }
@@ -170,21 +170,20 @@ class clickhouse_keeper (
 
   if $manage_service {
     service { $service_name:
-      ensure    => $service_ensure,
-      enable    => $service_enable,
-      require   => Class['Clickhouse_keeper::Config'],
-      subscribe => Concat["${config_dir}/${config_file}"],
+      ensure  => $service_ensure,
+      enable  => $service_enable,
+      require => Class['Clickhouse_keeper::Config'],
     }
 
     if $manage_package {
-      Service <<| title == $service_name |>> {
+      Service <| title == $service_name |> {
         require => Package[$packages],
       }
     }
 
     if $manage_config {
-      Service <<| title == $service_name |>> {
-        require => File["${config_dir}/${config_file}"],
+      Service <| title == $service_name |> {
+        subscribe => Concat["${config_dir}/${config_file}"],
       }
     }
   }

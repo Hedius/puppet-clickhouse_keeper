@@ -14,11 +14,6 @@ class clickhouse_keeper::config (
       owner  => $clickhouse_keeper::owner,
       group  => $clickhouse_keeper::group,
     }
-    if $clickhouse_keeper::manage_service {
-      Concat <<| title == $config_path |>> {
-        notify => Service['clickhouse-keeper'],
-      }
-    }
   }
 
   concat::fragment { 'keeper_config':
@@ -43,7 +38,7 @@ class clickhouse_keeper::config (
     order   => 1,
   }
 
-  Concat::Fragment <<| tag == "clickhouse_keeper::config-${cluster}" |>>
+  Concat::Fragment <| tag == "clickhouse_keeper::config-${cluster}" |>
 
   concat::fragment { 'keeper_footer':
     target  => $config_path,
@@ -53,11 +48,5 @@ class clickhouse_keeper::config (
         'dhparams'    => $clickhouse_keeper::dhparams,
     }),
     order   => 99,
-  }
-
-  if $clickhouse_keeper::manage_service {
-    Concat::Fragment <<| title == 'keeper_config' or title == 'keeper_footer' |>> {
-      notify => Service['clickhouse-keeper'],
-    }
   }
 }

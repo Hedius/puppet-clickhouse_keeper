@@ -22,7 +22,7 @@ describe 'clickhouse_keeper' do
         }
       EOS
 
-      apply_manifest(pp, catch_failures: false)
+      apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
 
@@ -34,14 +34,13 @@ describe 'clickhouse_keeper' do
     end
 
     # we need a static raft config for this
-    # describe package('clickhouse-keeper') do
-    #   it { is_expected.to be_installed }
-    # end
+    describe package('clickhouse-keeper') do
+     it { is_expected.to be_installed }
+    end
 
-    # describe service('clickhouse-keeper') do
-    #  #it { is_expected.to be_enabled }
-    #  # might be in state activating
-    #  # it { is_expected.to be_running }
-    # end
+    describe service('clickhouse-keeper') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
   end
 end
