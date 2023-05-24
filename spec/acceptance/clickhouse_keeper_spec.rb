@@ -18,6 +18,7 @@ describe 'clickhouse_keeper' do
               'cluster' => 'main',
             },
           },
+          generate_dhparams => false,
         }
       EOS
 
