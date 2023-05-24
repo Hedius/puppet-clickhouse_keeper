@@ -170,4 +170,21 @@ describe 'clickhouse_keeper' do
       is_expected.to contain_concat__fragment('keeper_footer').with_content(%r{<certificateFile>/etc/ssl/server.crt</certificateFile>})
     }
   end
+
+  on_supported_os.each do |os, os_facts|
+    context "on #{os}" do
+      let(:facts) { os_facts }
+
+      it { is_expected.to compile.with_all_deps }
+
+      case os_facts[:os]['family']
+      when 'Debian'
+        it { is_expected.to contain_apt__source('clickhouse') }
+        it { is_expected.to contain_package('clickhouse-keeper') }
+      when 'RedHat'
+        it { is_expected.to contain_yumrepo('clickhouse') }
+        it { is_expected.to contain_package('clickhouse-keeper') }
+      end
+    end
+  end
 end

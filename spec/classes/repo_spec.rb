@@ -13,7 +13,7 @@ describe 'clickhouse_keeper::repo' do
 
       it { is_expected.to compile.with_all_deps }
 
-      case os_facts[:os][:family]
+      case os_facts[:os]['family']
       when 'Debian'
         it {
           is_expected.to contain_apt__source('clickhouse').with(
