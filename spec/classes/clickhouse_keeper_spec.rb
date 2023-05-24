@@ -141,7 +141,7 @@ describe 'clickhouse_keeper' do
           ensure: 'running',
           enable: true,
         },
-      )
+      ).that_subscribes_to('Concat[/etc/clickhouse-keeper/keeper_config.xml]')
     }
   end
 

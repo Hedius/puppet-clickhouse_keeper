@@ -81,7 +81,7 @@ class clickhouse_keeper (
   Integer $min_session_timeout = 10000,
   Integer $session_timeout = 100000,
 ) {
-  include clickhouse_keeper::repo
+  contain clickhouse_keeper::repo
 
   if $manage_user {
     ensure_resource('group', $group)
@@ -170,9 +170,10 @@ class clickhouse_keeper (
 
   if $manage_service {
     service { $service_name:
-      ensure  => $service_ensure,
-      enable  => $service_enable,
-      require => Class['Clickhouse_keeper::Config'],
+      ensure    => $service_ensure,
+      enable    => $service_enable,
+      require   => Class['Clickhouse_keeper::Config'],
+      subscribe => Concat["${config_dir}/${config_file}"],
     }
 
     if $manage_package {
