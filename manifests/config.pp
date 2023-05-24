@@ -56,7 +56,7 @@ class clickhouse_keeper::config (
   }
 
   if $clickhouse_keeper::manage_service {
-    Concat::Fragment <<| title == 'keeper_config' || title == 'keeper_footer' |>> {
+    Concat::Fragment <<| title == 'keeper_config' or title == 'keeper_footer' |>> {
       notify => Service['clickhouse-keeper'],
     }
   }

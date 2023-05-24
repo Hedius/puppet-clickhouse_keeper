@@ -33,7 +33,17 @@ describe 'clickhouse_keeper' do
     }
 
     it {
+      is_expected.to contain_group('clickhouse').with(
+        name: 'clickhouse',
+      )
+    }
+
+    it {
       is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<tcp_port>9181</tcp_port>})
+    }
+
+    it {
+      is_expected.to contain_concat('/etc/clickhouse-keeper/keeper_config.xml')
     }
   end
 
