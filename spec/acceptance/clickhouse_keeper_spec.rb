@@ -35,7 +35,7 @@ describe 'clickhouse_keeper' do
 
     # we need a static raft config for this
     describe package('clickhouse-keeper') do
-     it { is_expected.to be_installed }
+      it { is_expected.to be_installed }
     end
 
     describe service('clickhouse-keeper') do
