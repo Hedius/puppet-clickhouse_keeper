@@ -38,7 +38,10 @@ class clickhouse_keeper::config (
     order   => 1,
   }
 
-  Concat::Fragment <| tag == "clickhouse_keeper::config-${cluster}" |>
+  # import other cluster members
+  if $clickhouse_keeper::export_raft {
+    Concat::Fragment <<| tag == "clickhouse_keeper::config-${cluster}" |>>
+  }
 
   concat::fragment { 'keeper_footer':
     target  => $config_path,
