@@ -69,6 +69,22 @@ describe 'clickhouse_keeper' do
     }
   end
 
+  context 'set log_storage_path' do
+    let(:params) { { log_storage_path: '/var/lib/keeper/coordination' } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<log_storage_path>/var/lib/keeper/coordination</log_storage_path>})
+    }
+  end
+
+  context 'set snapshot_storage_path' do
+    let(:params) { { snapshot_storage_path: '/var/lib/keeper/snapshot' } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<snapshot_storage_path>/var/lib/keeper/snapshot</snapshot_storage_path>})
+    }
+  end
+
   context 'manage service' do
     let(:params) do
       {

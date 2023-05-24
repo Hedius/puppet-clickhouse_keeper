@@ -15,10 +15,8 @@
         <% }-%>
         <!-- Must be unique among all keeper serves -->
         <server_id><%= $server_id %></server_id>
-
-        <log_storage_path>/var/lib/clickhouse/coordination/logs</log_storage_path>
-        <snapshot_storage_path>/var/lib/clickhouse/coordination/snapshots</snapshot_storage_path>
-
+        <log_storage_path><%= $log_storage_path %></log_storage_path>
+        <snapshot_storage_path><%= $snapshot_storage_path %></snapshot_storage_path>
         <coordination_settings>
             <operation_timeout_ms>10000</operation_timeout_ms>
             <min_session_timeout_ms>10000</min_session_timeout_ms>

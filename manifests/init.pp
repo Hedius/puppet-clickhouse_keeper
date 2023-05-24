@@ -30,6 +30,10 @@
 #    Port for client connections
 #
 # @param tcp_port_secure
+# @param log_storage_path
+#   Keeper coordination logs (raft)
+# @param snapshot_storage_path
+#   Snapshots path
 # @example
 #   include clickhouse_keeper
 class clickhouse_keeper (
@@ -66,6 +70,8 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $certificate = '/etc/clickhouse-keeper/server.crt',
   Stdlib::AbsolutePath $private_key = '/etc/clickhouse-keeper/server.key',
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
+  Stdlib::AbsolutePath $log_storage_path = '/var/lib/clickhouse/coordination/logs',
+  Stdlib::AbsolutePath $snapshot_storage_path = '/var/lib/clickhouse/coordination/snapshots',
 ) {
   include clickhouse_keeper::repo
 
