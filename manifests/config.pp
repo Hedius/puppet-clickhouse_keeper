@@ -54,4 +54,10 @@ class clickhouse_keeper::config (
     }),
     order   => 99,
   }
+
+  if $clickhouse_keeper::manage_service {
+    Concat::Fragment <<| title == 'keeper_config' || title == 'keeper_footer' |>> {
+      notify => Service['clickhouse-keeper'],
+    }
+  }
 }
