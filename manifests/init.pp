@@ -29,6 +29,7 @@
 # @param tcp_port
 #    Port for client connections
 #
+# @param tcp_port_secure
 # @example
 #   include clickhouse_keeper
 class clickhouse_keeper (
@@ -61,11 +62,11 @@ class clickhouse_keeper (
   Boolean $service_enable = true,
   Integer $raft_port = 9234,
   Integer $tcp_port = 9181,
+  Optional[Integer] $tcp_port_secure = undef,
   Stdlib::AbsolutePath $certificate = '/etc/clickhouse-keeper/server.crt',
   Stdlib::AbsolutePath $private_key = '/etc/clickhouse-keeper/server.key',
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
 ) {
-
   include clickhouse_keeper::repo
 
   if $manage_user {
@@ -84,11 +85,11 @@ class clickhouse_keeper (
     $config_path = "${config_dir}/${config_file}"
 
     file { $config_dir:
-      ensure => directory,
-      mode   => '0644',
-      owner  => $owner,
-      group  => $group,
-      require => Class['Clickhouse_keeper::Repo']
+      ensure  => directory,
+      mode    => '0644',
+      owner   => $owner,
+      group   => $group,
+      require => Class['Clickhouse_keeper::Repo'],
     }
 
     if $manage_package {
@@ -146,7 +147,7 @@ class clickhouse_keeper (
     # This is going to take a long time
     exec { 'generate_dhparams':
       command => "openssl dhparam -out ${dhparams} 4096",
-      path    => [ '/bin', '/usr/bin' ],
+      path    => ['/bin', '/usr/bin'],
       onlyif  => 'which openssl',
       creates => $dhparams,
       timeout => 0, # disable timeout

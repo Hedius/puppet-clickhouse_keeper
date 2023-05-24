@@ -32,6 +32,7 @@ class clickhouse_keeper::config (
         'log_count'       => $clickhouse_keeper::log_count,
         'max_connections' => $clickhouse_keeper::max_connections,
         'tcp_port'        => $clickhouse_keeper::tcp_port,
+        'tcp_port_secure' => $clickhouse_keeper::tcp_port_secure,
     }),
     order   => 1,
   }
@@ -41,10 +42,10 @@ class clickhouse_keeper::config (
   concat::fragment { 'keeper_footer':
     target  => $config_path,
     content => epp("${module_name}/keeper_footer.xml.epp", {
-        'certificate'     => $clickhouse_keeper::certificate,
-        'private_key'     => $clickhouse_keeper::private_key,
-        'dhparams'        => $clickhouse_keeper::dhparams,
-      }),
+        'certificate' => $clickhouse_keeper::certificate,
+        'private_key' => $clickhouse_keeper::private_key,
+        'dhparams'    => $clickhouse_keeper::dhparams,
+    }),
     order   => 99,
   }
 }

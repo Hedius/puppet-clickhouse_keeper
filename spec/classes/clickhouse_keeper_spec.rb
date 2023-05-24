@@ -61,6 +61,14 @@ describe 'clickhouse_keeper' do
     }
   end
 
+  context 'set tcp_port_secure' do
+    let(:params) { { tcp_port_secure: 2182 } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<tcp_port_secure>2182</tcp_port_secure>})
+    }
+  end
+
   context 'manage service' do
     let(:params) do
       {
