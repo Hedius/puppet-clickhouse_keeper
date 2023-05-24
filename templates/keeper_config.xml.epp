@@ -18,10 +18,10 @@
         <log_storage_path><%= $log_storage_path %></log_storage_path>
         <snapshot_storage_path><%= $snapshot_storage_path %></snapshot_storage_path>
         <coordination_settings>
-            <operation_timeout_ms>10000</operation_timeout_ms>
-            <min_session_timeout_ms>10000</min_session_timeout_ms>
-            <session_timeout_ms>100000</session_timeout_ms>
-            <raft_logs_level>information</raft_logs_level>
+            <operation_timeout_ms><%= $operation_timeout %></operation_timeout_ms>
+            <min_session_timeout_ms><%= $min_session_timeout %></min_session_timeout_ms>
+            <session_timeout_ms><%= $session_timeout %></session_timeout_ms>
+            <raft_logs_level><%= $raft_log_level %></raft_logs_level>
             <!-- All settings listed in https://github.com/ClickHouse/ClickHouse/blob/master/src/Coordination/CoordinationSettings.h -->
         </coordination_settings>
 

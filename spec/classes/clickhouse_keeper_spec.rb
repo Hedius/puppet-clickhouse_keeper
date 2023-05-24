@@ -53,6 +53,14 @@ describe 'clickhouse_keeper' do
     }
   end
 
+  context 'set raft log level' do
+    let(:params) { { raft_log_level: 'debug' } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<raft_logs_level>debug</raft_logs_level>})
+    }
+  end
+
   context 'set max_connections' do
     let(:params) { { max_connections: 1024 } }
 
@@ -82,6 +90,30 @@ describe 'clickhouse_keeper' do
 
     it {
       is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<snapshot_storage_path>/var/lib/keeper/snapshot</snapshot_storage_path>})
+    }
+  end
+
+  context 'set operation_timeout' do
+    let(:params) { { operation_timeout: 5000 } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<operation_timeout_ms>5000</operation_timeout_ms>})
+    }
+  end
+
+  context 'set min_session_timeout' do
+    let(:params) { { min_session_timeout: 4000 } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<min_session_timeout_ms>4000</min_session_timeout_ms>})
+    }
+  end
+
+  context 'set session_timeout' do
+    let(:params) { { session_timeout: 6000 } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<session_timeout_ms>6000</session_timeout_ms>})
     }
   end
 

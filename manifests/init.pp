@@ -19,6 +19,7 @@
 #    Path to config directory
 # @param config_file
 # @param log_level
+# @param raft_log_level
 # @param log_file
 # @param error_file
 # @param log_size
@@ -34,6 +35,9 @@
 #   Keeper coordination logs (raft)
 # @param snapshot_storage_path
 #   Snapshots path
+# @param operation_timeout
+# @param min_session_timeout
+# @param session_timeout
 # @example
 #   include clickhouse_keeper
 class clickhouse_keeper (
@@ -54,6 +58,7 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $config_dir = '/etc/clickhouse-keeper',
   String $config_file = 'keeper_config.xml',
   Clickhouse_Keeper::LogLevel $log_level = 'information',
+  Clickhouse_Keeper::LogLevel $raft_log_level = 'information',
   Stdlib::AbsolutePath $log_file = '/var/log/clickhouse-keeper/clickhouse-keeper.log',
   Stdlib::AbsolutePath $error_file = '/var/log/clickhouse-keeper/clickhouse-keeper.err.log',
   String $log_size = '1000M',
@@ -72,6 +77,9 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
   Stdlib::AbsolutePath $log_storage_path = '/var/lib/clickhouse/coordination/logs',
   Stdlib::AbsolutePath $snapshot_storage_path = '/var/lib/clickhouse/coordination/snapshots',
+  Integer $operation_timeout = 10000,
+  Integer $min_session_timeout = 10000,
+  Integer $session_timeout = 10000,
 ) {
   include clickhouse_keeper::repo
 

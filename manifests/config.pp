@@ -25,6 +25,7 @@ class clickhouse_keeper::config (
     target  => $config_path,
     content => epp("${module_name}/keeper_config.xml.epp", {
         'log_level'             => $clickhouse_keeper::log_level,
+        'raft_log_level'        => $clickhouse_keeper::raft_log_level,
         'server_id'             => $clickhouse_keeper::id,
         'log'                   => $clickhouse_keeper::log_file,
         'error_file'            => $clickhouse_keeper::error_file,
@@ -35,6 +36,9 @@ class clickhouse_keeper::config (
         'tcp_port_secure'       => $clickhouse_keeper::tcp_port_secure,
         'log_storage_path'      => $clickhouse_keeper::log_storage_path,
         'snapshot_storage_path' => $clickhouse_keeper::snapshot_storage_path,
+        'operation_timeout'     => $clickhouse_keeper::operation_timeout,
+        'min_session_timeout'   => $clickhouse_keeper::min_session_timeout,
+        'session_timeout'       => $clickhouse_keeper::session_timeout,
     }),
     order   => 1,
   }
