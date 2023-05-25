@@ -170,4 +170,48 @@ describe 'clickhouse_keeper' do
       is_expected.to contain_concat__fragment('keeper_footer').with_content(%r{<certificateFile>/etc/ssl/server.crt</certificateFile>})
     }
   end
+
+  context 'with static cluster config' do
+    let(:params) do
+      {
+        export_raft: false,
+        raft_config: {
+          'zk1': {
+            'id': 1,
+            'address': '10.0.0.1',
+            'port': 9234,
+            'cluster': 'primary',
+          },
+          'zk2': {
+            'id': 2,
+            'address': '10.0.0.2',
+            'port': 9234,
+            'cluster': 'primary',
+          },
+          'zk3': {
+            'id': 3,
+            'address': '10.0.0.3',
+            'port': 9234,
+            'cluster': 'primary',
+          },
+        },
+      }
+    end
+
+    it {
+      is_expected.to contain_clickhouse_keeper__raft('clickhouse_keeper-zk1').with(
+        {
+          'id' => 1,
+          'port' => 9234,
+          'cluster' => 'primary',
+        },
+      )
+    }
+    it { is_expected.to contain_clickhouse_keeper__raft('clickhouse_keeper-zk2') }
+    it { is_expected.to contain_clickhouse_keeper__raft('clickhouse_keeper-zk3') }
+
+    it { is_expected.to contain_concat__fragment('clickhouse_keeper-zk1').with_content(%r{<id>1</id>}) }
+    it { is_expected.to contain_concat__fragment('clickhouse_keeper-zk2').with_content(%r{<id>2</id>}) }
+    it { is_expected.to contain_concat__fragment('clickhouse_keeper-zk3').with_content(%r{<id>3</id>}) }
+  end
 end
