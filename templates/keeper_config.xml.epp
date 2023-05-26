@@ -8,6 +8,11 @@
         <!-- <console>1</console> --> <!-- Default behavior is autodetection (log to console if not daemon mode and is tty) -->
     </logger>
     <max_connections><%= $max_connections %></max_connections>
+<% if $prometheus_port { -%>
+    <prometheus>
+        <port><%= $prometheus_port %></port>
+    </prometheus>
+<% }-%>
     <keeper_server>
         <tcp_port><%= $tcp_port %></tcp_port>
         <% if $tcp_port_secure { -%>

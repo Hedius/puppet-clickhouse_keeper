@@ -34,6 +34,7 @@ class clickhouse_keeper::config (
         'operation_timeout'     => $clickhouse_keeper::operation_timeout,
         'min_session_timeout'   => $clickhouse_keeper::min_session_timeout,
         'session_timeout'       => $clickhouse_keeper::session_timeout,
+        'prometheus_port'       => $clickhouse_keeper::prometheus_port,
     }),
     order   => 1,
   }

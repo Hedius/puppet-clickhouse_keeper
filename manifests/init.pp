@@ -29,8 +29,9 @@
 # @param service_ensure
 # @param tcp_port
 #    Port for client connections
-#
 # @param tcp_port_secure
+# @param prometheus_port
+#    If defined metrics will be exposed at given port and /metrics endpoint
 # @param log_storage_path
 #   Keeper coordination logs (raft)
 # @param snapshot_storage_path
@@ -72,6 +73,7 @@ class clickhouse_keeper (
   Integer $raft_port = 9234,
   Integer $tcp_port = 9181,
   Optional[Integer] $tcp_port_secure = undef,
+  Optional[Integer] $prometheus_port = undef,
   Stdlib::AbsolutePath $certificate = '/etc/clickhouse-keeper/server.crt',
   Stdlib::AbsolutePath $private_key = '/etc/clickhouse-keeper/server.key',
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',

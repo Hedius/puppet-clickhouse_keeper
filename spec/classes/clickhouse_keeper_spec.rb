@@ -127,6 +127,14 @@ describe 'clickhouse_keeper' do
     }
   end
 
+  context 'set prometheus port' do
+    let(:params) { { prometheus_port: 9100 } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<prometheus>(\s+)?<port>9100</port>})
+    }
+  end
+
   context 'manage service' do
     let(:params) do
       {
