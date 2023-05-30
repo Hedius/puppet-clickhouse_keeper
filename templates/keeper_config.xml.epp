@@ -21,6 +21,7 @@
         <% }-%>
         <!-- Must be unique among all keeper serves -->
         <server_id><%= $server_id %></server_id>
+        <enable_ipv6><%= $enable_ipv6 %></enable_ipv6>
         <log_storage_path><%= $log_storage_path %></log_storage_path>
         <snapshot_storage_path><%= $snapshot_storage_path %></snapshot_storage_path>
         <coordination_settings>

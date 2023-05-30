@@ -26,6 +26,7 @@
 # @param log_count
 # @param listen_host
 #    Bind address for client connections
+# @param enable_ipv6
 # @param max_connections
 # @param service_enable
 # @param service_ensure
@@ -72,6 +73,7 @@ class clickhouse_keeper (
   String $cluster = 'main',
   String $service_name = 'clickhouse-keeper',
   String $service_ensure = 'running',
+  Boolean $enable_ipv6 = true,
   Boolean $service_enable = true,
   Integer $raft_port = 9234,
   Integer $tcp_port = 9181,

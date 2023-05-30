@@ -36,6 +36,7 @@ class clickhouse_keeper::config (
         'session_timeout'       => $clickhouse_keeper::session_timeout,
         'prometheus_port'       => $clickhouse_keeper::prometheus_port,
         'listen_host'           => $clickhouse_keeper::listen_host,
+        'enable_ipv6'           => $clickhouse_keeper::enable_ipv6,
     }),
     order   => 1,
   }

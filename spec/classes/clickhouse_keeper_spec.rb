@@ -143,6 +143,14 @@ describe 'clickhouse_keeper' do
     }
   end
 
+  context 'disable ipv6' do
+    let(:params) { { enable_ipv6: false } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<enable_ipv6>false</enable_ipv6>})
+    }
+  end
+
   context 'manage service' do
     let(:params) do
       {
