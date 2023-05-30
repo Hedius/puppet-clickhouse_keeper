@@ -24,6 +24,8 @@
 # @param error_file
 # @param log_size
 # @param log_count
+# @param listen_host
+#    Bind address for client connections
 # @param max_connections
 # @param service_enable
 # @param service_ensure
@@ -65,6 +67,7 @@ class clickhouse_keeper (
   String $log_size = '1000M',
   Integer $log_count = 10,
   Integer $max_connections = 4096,
+  String $listen_host = '127.0.0.1',
   String $address = $facts['networking']['ip'],
   String $cluster = 'main',
   String $service_name = 'clickhouse-keeper',

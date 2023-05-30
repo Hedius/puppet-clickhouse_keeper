@@ -135,6 +135,14 @@ describe 'clickhouse_keeper' do
     }
   end
 
+  context 'set prometheus port' do
+    let(:params) { { listen_host: '0.0.0.0' } }
+
+    it {
+      is_expected.to contain_concat__fragment('keeper_config').with_content(%r{<clickhouse>(\s+)?<listen_host>0.0.0.0</listen_host>})
+    }
+  end
+
   context 'manage service' do
     let(:params) do
       {
