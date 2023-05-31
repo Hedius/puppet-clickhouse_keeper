@@ -2,9 +2,10 @@
   "name": "deric-clickhouse_keeper",
   "version": "0.1.0",
   "author": "Tomas Barton",
-  "summary": "",
+  "summary": "A module to manage ClickHouse Keeper cluster",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/deric/puppet-clickhouse_keeper",
+  "issues_url": "https://github.com/deric/puppet-clickhouse_keeper/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -51,20 +52,22 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "10"
+        "10",
+        "11"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "18.04"
+        "18.04",
+        "22.04"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 8.0.0"
+      "version_requirement": ">= 6.21.0 < 9.0.0"
     }
   ],
   "pdk-version": "2.7.1",
