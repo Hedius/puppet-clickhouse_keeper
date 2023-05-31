@@ -38,6 +38,8 @@ jobs:
         run: bundle exec rake spec
       - name: Rubocop
         run: bundle exec rake rubocop
+      - name: Lint
+        run: bundle exec rake lint
   acceptance:
     runs-on: ubuntu-latest
     env:

@@ -14,7 +14,6 @@ define clickhouse_keeper::raft (
   String  $cluster,
   Boolean $export_raft,
 ) {
-
   if $export_raft {
     @@concat::fragment { $title:
       target  => $target,

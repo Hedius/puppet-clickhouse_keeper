@@ -1,16 +1,24 @@
 # @summary Manages Clickouse Keeper
 #
+# @param address
+#    Exported address to raft config, used only when `export_raft` is true
 # @param id
 #    Must be unique among servers
+# @param cluster
 # @param manage_config
 # @param manage_repo
 #    Whether APT/RPM repository should be managed by Puppet
 # @param manage_package
+# @param manage_user
 # @param manage_service
+# @param export_raft
+# @param raft_config
+# @param raft_port
+# @param generate_certs
 # @param packages
 #    OS packages to be installed
 # @param package_ensure
-# @paran package_install_options
+# @param package_install_options
 # @param owner
 #    System user account to own config files
 # @param group
@@ -28,11 +36,15 @@
 #    Bind address for client connections
 # @param enable_ipv6
 # @param max_connections
+# @param service_name
 # @param service_enable
 # @param service_ensure
 # @param tcp_port
 #    Port for client connections
 # @param tcp_port_secure
+# @param certificate
+# @param private_key
+# @param dhparams
 # @param prometheus_port
 #    If defined metrics will be exposed at given port and /metrics endpoint
 # @param log_storage_path
@@ -46,6 +58,12 @@
 #   include clickhouse_keeper
 class clickhouse_keeper (
   Integer $id = fqdn_rand(255, $facts['networking']['ip']),
+  String  $listen_host = '127.0.0.1',
+  Integer $tcp_port = 9181,
+  String  $cluster = 'main',
+  String  $address = $facts['networking']['ip'],
+  Integer $max_connections = 4096,
+  Boolean $enable_ipv6 = true,
   Boolean $manage_config = true,
   Boolean $manage_repo = true,
   Boolean $manage_user = true,
@@ -67,16 +85,10 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $error_file = '/var/log/clickhouse-keeper/clickhouse-keeper.err.log',
   String $log_size = '1000M',
   Integer $log_count = 10,
-  Integer $max_connections = 4096,
-  String $listen_host = '127.0.0.1',
-  String $address = $facts['networking']['ip'],
-  String $cluster = 'main',
   String $service_name = 'clickhouse-keeper',
   String $service_ensure = 'running',
-  Boolean $enable_ipv6 = true,
   Boolean $service_enable = true,
   Integer $raft_port = 9234,
-  Integer $tcp_port = 9181,
   Optional[Integer] $tcp_port_secure = undef,
   Optional[Integer] $prometheus_port = undef,
   Stdlib::AbsolutePath $certificate = '/etc/clickhouse-keeper/server.crt',
