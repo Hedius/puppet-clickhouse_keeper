@@ -135,7 +135,7 @@ describe 'clickhouse_keeper' do
     }
   end
 
-  context 'set prometheus port' do
+  context 'set listen_host' do
     let(:params) { { listen_host: '0.0.0.0' } }
 
     it {
