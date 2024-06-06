@@ -51,6 +51,7 @@
 #   Keeper coordination logs (raft)
 # @param snapshot_storage_path
 #   Snapshots path
+# @param keeper_dir
 # @param operation_timeout
 # @param min_session_timeout
 # @param session_timeout
@@ -96,6 +97,7 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
   Stdlib::AbsolutePath $log_storage_path = '/var/lib/clickhouse/coordination/logs',
   Stdlib::AbsolutePath $snapshot_storage_path = '/var/lib/clickhouse/coordination/snapshots',
+  Stdlib::AbsolutePath $keeper_dir = '/var/lib/clickhouse-keeper',
   Integer $operation_timeout = 10000,
   Integer $min_session_timeout = 10000,
   Integer $session_timeout = 100000,
@@ -112,6 +114,13 @@ class clickhouse_keeper (
         'gid' => $group,
       }
     )
+  }
+
+  file { $keeper_dir:
+    ensure => directory,
+    mode   => '0644',
+    owner  => $owner,
+    group  => $group,
   }
 
   if $manage_config {
