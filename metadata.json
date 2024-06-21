@@ -1,6 +1,6 @@
 {
   "name": "deric-clickhouse_keeper",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "author": "Tomas Barton",
   "summary": "A module to manage ClickHouse Keeper cluster",
   "license": "Apache-2.0",
@@ -9,7 +9,7 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.20.0 < 10.0.0"
+      "version_requirement": ">= 9.0.0 < 10.0.0"
     },
     {
       "name": "puppetlabs/apt",
