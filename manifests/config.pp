@@ -33,6 +33,7 @@ class clickhouse_keeper::config (
         'snapshot_storage_path' => $clickhouse_keeper::snapshot_storage_path,
         'operation_timeout'     => $clickhouse_keeper::operation_timeout,
         'min_session_timeout'   => $clickhouse_keeper::min_session_timeout,
+        'async_replication'     => $clickhouse_keeper::async_replication,
         'session_timeout'       => $clickhouse_keeper::session_timeout,
         'prometheus_port'       => $clickhouse_keeper::prometheus_port,
         'listen_host'           => $clickhouse_keeper::listen_host,
