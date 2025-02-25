@@ -120,7 +120,7 @@ class clickhouse_keeper (
 
   file { $keeper_dir:
     ensure => directory,
-    mode   => '0644',
+    mode   => '0750',
     owner  => $owner,
     group  => $group,
   }
@@ -130,7 +130,7 @@ class clickhouse_keeper (
 
     file { $config_dir:
       ensure  => directory,
-      mode    => '0644',
+      mode    => '0750',
       owner   => $owner,
       group   => $group,
       require => Class['Clickhouse_keeper::Repo'],
