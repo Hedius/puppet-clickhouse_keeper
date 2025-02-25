@@ -29,6 +29,7 @@
             <min_session_timeout_ms><%= $min_session_timeout %></min_session_timeout_ms>
             <session_timeout_ms><%= $session_timeout %></session_timeout_ms>
             <raft_logs_level><%= $raft_log_level %></raft_logs_level>
+            <async_replication><%= $async_replication %></async_replication>
             <!-- All settings listed in https://github.com/ClickHouse/ClickHouse/blob/master/src/Coordination/CoordinationSettings.h -->
         </coordination_settings>
 
