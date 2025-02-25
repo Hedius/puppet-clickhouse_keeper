@@ -55,6 +55,7 @@
 # @param operation_timeout
 # @param min_session_timeout
 # @param session_timeout
+# @param async_replication
 # @example
 #   include clickhouse_keeper
 class clickhouse_keeper (
@@ -101,6 +102,7 @@ class clickhouse_keeper (
   Integer $operation_timeout = 10000,
   Integer $min_session_timeout = 10000,
   Integer $session_timeout = 100000,
+  Boolean $async_replication = true,
 ) {
   contain clickhouse_keeper::repo
 
