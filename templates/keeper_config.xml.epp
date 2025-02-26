@@ -36,3 +36,4 @@
         <!-- enable sanity hostname checks for cluster configuration (e.g. if localhost is used with remote endpoints) -->
         <hostname_checks_enabled>true</hostname_checks_enabled>
         <raft_configuration>
+            <secure><%= $secure %></secure>

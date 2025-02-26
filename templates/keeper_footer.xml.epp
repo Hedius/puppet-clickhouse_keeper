@@ -6,17 +6,35 @@
             <!-- openssl req -subj "/CN=localhost" -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/clickhouse-server/server.key -out /etc/clickhouse-server/server.crt -->
             <certificateFile><%= $certificate %></certificateFile>
             <privateKeyFile><%= $private_key %></privateKeyFile>
+<% if $caconfig { -%>
+            <caConfig><%= $caconfig %></caConfig>
+<% } -%>
             <!-- dhparams are optional. You can delete the <dhParamsFile> element.
                  To generate dhparams, use the following command:
                   openssl dhparam -out /etc/clickhouse-keeper/dhparam.pem 4096
                  Only file format with BEGIN DH PARAMETERS is supported.
               -->
             <dhParamsFile><%= $dhparams %></dhParamsFile>
-            <verificationMode>none</verificationMode>
+            <verificationMode><%= $server_verification_mode %></verificationMode>
             <loadDefaultCAFile>true</loadDefaultCAFile>
             <cacheSessions>true</cacheSessions>
             <disableProtocols>sslv2,sslv3</disableProtocols>
             <preferServerCiphers>true</preferServerCiphers>
         </server>
+<% if $secure { -%>
+        <client>
+            <certificateFile><%= $client_certificate %></certificateFile>
+            <privateKeyFile><%= $client_private_key %></privateKeyFile>
+<% if $caconfig { -%>
+            <caConfig><%= $caconfig %></caConfig>
+<% } -%>
+            <dhParamsFile><%= $client_dhparams %></dhParamsFile>
+            <verificationMode><%= $server_verification_mode %></verificationMode>
+            <loadDefaultCAFile>true</loadDefaultCAFile>
+            <cacheSessions>true</cacheSessions>
+            <disableProtocols>sslv2,sslv3</disableProtocols>
+            <preferServerCiphers>true</preferServerCiphers>
+        </client>
+<% } -%>
     </openSSL>
 </clickhouse>
