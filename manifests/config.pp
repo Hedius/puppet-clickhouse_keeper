@@ -38,6 +38,7 @@ class clickhouse_keeper::config (
         'prometheus_port'       => $clickhouse_keeper::prometheus_port,
         'listen_host'           => $clickhouse_keeper::listen_host,
         'enable_ipv6'           => $clickhouse_keeper::enable_ipv6,
+        'secure'                => $clickhouse_keeper::secure,
     }),
     order   => 1,
   }
@@ -50,9 +51,17 @@ class clickhouse_keeper::config (
   concat::fragment { 'keeper_footer':
     target  => $config_path,
     content => epp("${module_name}/keeper_footer.xml.epp", {
-        'certificate' => $clickhouse_keeper::certificate,
-        'private_key' => $clickhouse_keeper::private_key,
-        'dhparams'    => $clickhouse_keeper::dhparams,
+        'certificate'              => $clickhouse_keeper::certificate,
+        'private_key'              => $clickhouse_keeper::private_key,
+        'caconfig'                 => $clickhouse_keeper::caconfig,
+        'dhparams'                 => $clickhouse_keeper::dhparams,
+        'server_verification_mode' => $clickhouse_keeper::server_verification_mode,
+        'secure'                   => $clickhouse_keeper::secure,
+        'client_certificate'       => $clickhouse_keeper::client_certificate,
+        'client_private_key'       => $clickhouse_keeper::client_private_key,
+        'client_caconfig'          => $clickhouse_keeper::client_caconfig,
+        'client_dhparams'          => $clickhouse_keeper::client_dhparams,
+        'client_verification_mode' => $clickhouse_keeper::client_verification_mode,
     }),
     order   => 99,
   }

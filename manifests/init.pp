@@ -42,6 +42,8 @@
 # @param tcp_port
 #    Port for client connections
 # @param tcp_port_secure
+# @param secure
+#   Enable cluster encrypted communication.
 # @param certificate
 # @param private_key
 # @param dhparams
@@ -93,9 +95,15 @@ class clickhouse_keeper (
   Integer $raft_port = 9234,
   Optional[Integer] $tcp_port_secure = undef,
   Optional[Integer] $prometheus_port = undef,
+  Boolean $secure = false,
   Stdlib::AbsolutePath $certificate = '/etc/clickhouse-keeper/server.crt',
   Stdlib::AbsolutePath $private_key = '/etc/clickhouse-keeper/server.key',
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
+  Clickhouse_Keeper::VerificationMode $server_verification_mode = 'none',
+  Stdlib::AbsolutePath $client_certificate = $certificated,
+  Stdlib::AbsolutePath $client_private_key = $private_key,
+  Stdlib::AbsolutePath $client_dhparams = $dhparams,
+  Clickhouse_Keeper::VerificationMode $client_verification_mode = 'none',
   Stdlib::AbsolutePath $log_storage_path = '/var/lib/clickhouse/coordination/logs',
   Stdlib::AbsolutePath $snapshot_storage_path = '/var/lib/clickhouse/coordination/snapshots',
   Stdlib::AbsolutePath $keeper_dir = '/var/lib/clickhouse-keeper',
