@@ -101,7 +101,7 @@ class clickhouse_keeper (
   Stdlib::AbsolutePath $private_key = '/etc/clickhouse-keeper/server.key',
   Stdlib::AbsolutePath $dhparams = '/etc/clickhouse-keeper/dhparam.pem',
   Clickhouse_Keeper::VerificationMode $server_verification_mode = 'none',
-  Stdlib::AbsolutePath $client_certificate = $certificated,
+  Stdlib::AbsolutePath $client_certificate = $certificate,
   Stdlib::AbsolutePath $client_caconfig = $caconfig,
   Stdlib::AbsolutePath $client_private_key = $private_key,
   Stdlib::AbsolutePath $client_dhparams = $dhparams,
